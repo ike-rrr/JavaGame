@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class Tresor extends Joc {
 	// Propietats
 	private String nom;
