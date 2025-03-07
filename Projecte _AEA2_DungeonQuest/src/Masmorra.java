@@ -57,8 +57,15 @@ public class Masmorra extends Joc {
 				if (matriuSales[i][f].getMonstres() == true) {
 					arrayMonstres[contadorMonstre] = matriuSales[i][f].getEnemic();
 					contadorMonstre++;
-					
-				} else if (matriuSales[i][f] == ' ') {
+				
+				}
+				
+				if (matriuSales[i][f].getTresors() == true) {
+					arrayTresors[contadorTresor] = matriuSales[i][f].getRecompensa();
+					contadorTresor++;
+				
+				}
+				
 					
 					
 				}
@@ -79,10 +86,7 @@ public class Masmorra extends Joc {
 	public static void generarVista(Masmorra masmorra) {
 		for (int i=0; i<masmorra.matriuSales.length; i++) {
 			for (int f=0; f<masmorra.matriuSales[i].length; f++) {
-				if (masmorra.matriuSales[i][f].) {
-					
-					
-				}
+
 		
 			}
 			
