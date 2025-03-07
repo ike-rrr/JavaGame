@@ -13,12 +13,12 @@ public class Masmorra extends Joc {
 		tamanyArrays();
 		omplirMasmorra();
 
-			
+
 	}
-	
+
 	// Getters i Setters
-	
-	
+
+
 	// Mètodes
 	/**
 	 * Funció que conta el nombre de monstres / tresors i assigna una dimensió a les arrays corresponents per contenir-les
@@ -28,23 +28,23 @@ public class Masmorra extends Joc {
 			for (int f=0; f<matriuSales[i].length; f++) {
 				if (matriuSales[i][f].getMonstres() == true) {
 					nombreMonstres++;
-					
+
 				}
-				
+
 				if (matriuSales[i][f].getTresors() == true) {
 					nombreTresors++;
-					
+
 				}
-				
+
 			}
-			
+
 		}
 
 		arrayMonstres = new Monstre[nombreMonstres];
 		arrayTresors = new Tresor[nombreTresors];
-		
+
 	}
-	
+
 	/**
 	 * Funció que ompleix les arrays de Monstres i Tresors 
 	 */
@@ -52,46 +52,43 @@ public class Masmorra extends Joc {
 		int contadorMonstre = 0;
 		int contadorTresor = 0;
 		for (int i=0; i<matriuSales.length; i++) {
-			for (int f=0; f<matriuSales[i].length; f++) {
+			for (int f = 0; f<matriuSales[i].length; f++) {
 				// Si la sala consta de monstres l'implementa a l'array de Monstres.
 				if (matriuSales[i][f].getMonstres() == true) {
 					arrayMonstres[contadorMonstre] = matriuSales[i][f].getEnemic();
 					contadorMonstre++;
-				
+
 				}
-				
+
 				if (matriuSales[i][f].getTresors() == true) {
 					arrayTresors[contadorTresor] = matriuSales[i][f].getRecompensa();
 					contadorTresor++;
-				
+
 				}
-				
-					
-					
-				}
-				
+
 				// Si la sala consta de tresors l'implementa a l'array de Tresors.
 				if (matriuSales[i][f].getTresors() == true) {
 					arrayTresors[contadorTresor] = matriuSales[i][f].getRecompensa();
 					contadorTresor++;
-					
+
 				}
-				
+
 			}
-		
 		}
-		
+
 	}
-	
+
+
+
 	public static void generarVista(Masmorra masmorra) {
 		for (int i=0; i<masmorra.matriuSales.length; i++) {
 			for (int f=0; f<masmorra.matriuSales[i].length; f++) {
 
-		
+
 			}
-			
+
 		}
-		
+
 	}
-	
+
 }
