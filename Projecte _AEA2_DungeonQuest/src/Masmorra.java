@@ -26,12 +26,13 @@ public class Masmorra extends Joc {
 	private void tamanyArrays() {
 		for (int i=0; i<matriuSales.length; i++) {
 			for (int f=0; f<matriuSales[i].length; f++) {
-				if (matriuSales[i][f].getMonstres() == true) {
+				// MIRA SI HAY MONSTER
+				if (matriuSales[i][f].isMonstre() == true) {
 					nombreMonstres++;
 
 				}
-
-				if (matriuSales[i][f].getTresors() == true) {
+				// MIRA SI HAY TESORO
+				if (matriuSales[i][f].isTresor() == true) {
 					nombreTresors++;
 
 				}

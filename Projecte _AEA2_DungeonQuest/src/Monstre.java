@@ -50,8 +50,27 @@ public class Monstre {
     public String toString() {
         return nom + " - " + vida;
     }
+    
+    // GETTERS I SETTERS
+    
+	public String getNom() {
+		return nom;
+	}
+	
+	public int getVida() {
+		return vida;
+	}
 
+	public void setVida(int vida) {
+		this.vida = vida;
+	}
 
+	public int getPenalitzacio() {
+		return penalitzacio;
+	}
 
+	public void setPenalitzacio(int penalitzacio) {
+		this.penalitzacio = penalitzacio;
+	}
 } 
 
