@@ -7,9 +7,9 @@ public class Main {
 		
 		Tresor tresor = new Tresor();
 		Personatge personatge = new Personatge("Hector");
-		Sala Sala = new Sala();
+		Sala sala = new Sala();
 		
-		System.out.println(Sala);
+		System.out.println(sala);
 		System.out.println(tresor);
 		System.out.println(personatge);
 		
