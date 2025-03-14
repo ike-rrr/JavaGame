@@ -12,13 +12,21 @@ public class Tresor extends Joc {
 	}
 	
 	// Getters i Setters
-	public String[] getNomsTresor() {
-		return nomsTresor;
+
+	public int getValor() {
+		return valor;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public double getPes() {
+		return pes;
 	}
 	
 	
 	// Mètodes
-	
 	/**
 	 * Funció que assigna automàticament els valors d'una instància de 'Tresor'
 	 */
