@@ -10,7 +10,7 @@ public class Joc {
 	 * @return
 	 */
 	protected boolean estaFora(int posicio, int longitudArray) {
-		return (posicio - 1 < 0 || posicio + 1 > longitudArray);
+		return (posicio < 0 || posicio > longitudArray);
 		
 	}
 	
