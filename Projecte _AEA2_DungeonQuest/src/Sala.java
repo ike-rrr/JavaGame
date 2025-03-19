@@ -90,5 +90,4 @@ public class Sala {
 		return "Sala [tipus= " + tipus + ", tresor= " + tresor + ", monstre= " + monstre + ", numPortes= " + numPortes
 				+ ", explorada= " + explorada +  (monstreObj != null ? ", Monstre= " + monstreObj.toString() : ", Sense Monstre") + "]";
 	}
-
 }
