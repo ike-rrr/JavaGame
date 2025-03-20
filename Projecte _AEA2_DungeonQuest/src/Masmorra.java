@@ -1,5 +1,6 @@
+import java.util.Arrays;
 
-public class Masmorra extends Joc {
+public class Masmorra {
 
 	// Propietats
 	private Monstre[] arrayMonstres = new Monstre[0];
@@ -7,9 +8,11 @@ public class Masmorra extends Joc {
 	private Sala[][] matriuSales = new Sala[10][10];
 	private int nombreMonstres = 0;
 	private int nombreTresors = 0;
+	
 	// Constructors
-	public Masmorra(Monstre[] arrayMonstres, Tresor[] arrayTresors) {
+	public Masmorra() {
 		// Generem array del tamany de la Masmorra per contenir els monstres i els tresors.
+		crearSales();
 		tamanyArrays();
 		omplirMasmorra();
 
@@ -24,15 +27,15 @@ public class Masmorra extends Joc {
 	 * Funció que conta el nombre de monstres / tresors i assigna una dimensió a les arrays corresponents per contenir-les
 	 */
 	private void tamanyArrays() {
-		for (int i=0; i<matriuSales.length; i++) {
-			for (int f=0; f<matriuSales[i].length; f++) {
+		for (int i=0; i<this.matriuSales.length; i++) {
+			for (int f=0; f<this.matriuSales[i].length; f++) {
 				// MIRA SI HAY MONSTER
-				if (matriuSales[i][f].isMonstre() == true) {
+				if (this.matriuSales[i][f].isMonstre() == true) {
 					nombreMonstres++;
 
 				}
 				// MIRA SI HAY TESORO
-				if (matriuSales[i][f].isTresor() == true) {
+				if (this.matriuSales[i][f].isTresor() == true) {
 					nombreTresors++;
 
 				}
@@ -41,9 +44,23 @@ public class Masmorra extends Joc {
 
 		}
 
-		arrayMonstres = new Monstre[nombreMonstres];
-		arrayTresors = new Tresor[nombreTresors];
+		this.arrayMonstres = new Monstre[nombreMonstres];
+		this.arrayTresors = new Tresor[nombreTresors];
 
+	}
+	
+	/**
+	 * Funció que genera objectes Sala dintre de la matriu Masmorra
+	 */
+	private void crearSales() {
+		for (int i=0; i<this.matriuSales.length; i++) {
+			for (int f=0; f<this.matriuSales[i].length; f++) {
+				this.matriuSales[i][f] = new Sala();
+
+			}
+
+		}
+		
 	}
 
 	/**
@@ -52,42 +69,49 @@ public class Masmorra extends Joc {
 	private void omplirMasmorra() {
 		int contadorMonstre = 0;
 		int contadorTresor = 0;
-		for (int i=0; i<matriuSales.length; i++) {
-			for (int f = 0; f<matriuSales[i].length; f++) {
+		for (int i=0; i<this.matriuSales.length; i++) {
+			for (int f = 0; f<this.matriuSales[i].length; f++) {
 				// Si la sala consta de monstres l'implementa a l'array de Monstres.
-				if (matriuSales[i][f].getMonstres() == true) {
-					arrayMonstres[contadorMonstre] = matriuSales[i][f].getEnemic();
+				if (this.matriuSales[i][f].isMonstre() == true) {
+					this.arrayMonstres[contadorMonstre] = this.matriuSales[i][f].getEnemic();
 					contadorMonstre++;
 
 				}
 
-				if (matriuSales[i][f].getTresors() == true) {
-					arrayTresors[contadorTresor] = matriuSales[i][f].getRecompensa();
-					contadorTresor++;
-
-				}
-
 				// Si la sala consta de tresors l'implementa a l'array de Tresors.
-				if (matriuSales[i][f].getTresors() == true) {
-					arrayTresors[contadorTresor] = matriuSales[i][f].getRecompensa();
+				if (this.matriuSales[i][f].isTresor() == true) {
+					this.arrayTresors[contadorTresor] = this.matriuSales[i][f].getRecompensa();
 					contadorTresor++;
 
 				}
 
 			}
 		}
-
+		return;
 	}
 
 
-
-	public static void generarVista(Masmorra masmorra) {
+	/**
+	 * Funció que mostra la vista de la matriu 
+	 * @param masmorra
+	 */
+	public static void generarVista(Masmorra masmorra, Personatge personatge) {
 		for (int i=0; i<masmorra.matriuSales.length; i++) {
 			for (int f=0; f<masmorra.matriuSales[i].length; f++) {
-
+				if (i == personatge.getPosicio(personatge).x && f == personatge.getPosicio(personatge).y) {
+					System.out.print("(&)");
+					
+				} else if (masmorra.matriuSales[i][f].getExplorada() == true) {
+					System.out.print("(*)");
+					
+				} else {
+					System.out.print("(-)");
+					
+				}
+				
 
 			}
-
+			System.out.println();
 		}
 
 	}
