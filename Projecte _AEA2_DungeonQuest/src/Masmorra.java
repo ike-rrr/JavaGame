@@ -20,6 +20,11 @@ public class Masmorra {
 	}
 
 	// Getters i Setters
+	public static Sala[][] getMatriuSales(Masmorra masmorra) {
+		return masmorra.matriuSales;
+		
+	}
+	
 
 
 	// Mètodes
@@ -48,7 +53,7 @@ public class Masmorra {
 		this.arrayTresors = new Tresor[nombreTresors];
 
 	}
-	
+
 	/**
 	 * Funció que genera objectes Sala dintre de la matriu Masmorra
 	 */
