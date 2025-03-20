@@ -31,12 +31,16 @@ public class Sala extends Joc {
 
 		}
 
+		// Determina de manera aleatoria si existeix o no Tresor
 		tresor = apareixer();
 
+		// Determina de manera aleatoria si existeix o no Monstre
 		monstre = apareixer();
 
+		// Genera un objecte de categoria Tresor
 		generarTresor();
 		
+		// Genera un objecte de categoria Monstre
 		generarMonstre();
 		
 		explorada = false;

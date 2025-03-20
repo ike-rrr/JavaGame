@@ -21,6 +21,16 @@ public class Personatge extends Joc {
 	}
 	
 	//Getters i Setters
+	/**
+	 * Funció que retorna la posició del Personatge
+	 * @return
+	 */
+	public static Point getPosicio(Personatge personatge) {
+		return personatge.posicio;
+	}
+	
+	
+	
 	
 	// Mètodes 
 	
@@ -34,44 +44,36 @@ public class Personatge extends Joc {
 		this.experiencia = 0;
 		this.agilitat = generarValorAleatori(4, 11);
 		this.forsa = generarValorAleatori(4, 11);
+		
 		// La mida de l'array és igual a la força del Personatge.
 		this.equipament = new String[atac];
 
 	}
-	
+
 	/**
-	 * Funció que canvia la posició en x i y segons la direcció donada i si es pot
+	 * Funció que mou Personatge en la posició en x i y en +-1
 	 * @param direccio
 	 */
 	public void mourePersonatge(char direccio) {
 		switch (direccio) {
 		case 'N': {
-			// Comprobem que si restem o sumem 1 a la posició no sortim de la matriu.
-			if (!estaFora(posicio.y, this.matriuRandom.length)) {
-				this.posicio.move(0, posicio.y + 1);
-				
-			}
+				this.posicio.move(posicio.x, posicio.y - 1);
+
 			break;
 			
 		} case 'S': {
-			if (!estaFora(posicio.y, this.matriuRandom.length)) {
-				this.posicio.move(0, posicio.y - 1);
+				this.posicio.move(posicio.x, posicio.y + 1);
 				
-			}
+
 			break;
 			
 		} case 'E': {
-			if (!estaFora(posicio.x, this.matriuRandom[0].length)) {
-				this.posicio.move(posicio.x + 1, 0);
+				this.posicio.move(posicio.x - 1, posicio.y);
 				
-			}
 			break;
 			
 		} case 'O': {
-			if (!estaFora(posicio.x, this.matriuRandom[0].length)) {
-				this.posicio.move(posicio.x - 1, 0);
-				
-			}
+				this.posicio.move(posicio.x + 1, posicio.y);
 			break;
 			
 		}

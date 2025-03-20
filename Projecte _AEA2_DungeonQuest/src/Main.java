@@ -13,7 +13,7 @@ public class Main {
 		System.out.println(sala);
 		System.out.println(tresor);
 		System.out.println(personatge);
-		masmorra.generarVista(masmorra);
+		Masmorra.generarVista(masmorra, personatge);
 		
 	}
 

@@ -27,15 +27,15 @@ public class Masmorra extends Joc {
 	 * Funció que conta el nombre de monstres / tresors i assigna una dimensió a les arrays corresponents per contenir-les
 	 */
 	private void tamanyArrays() {
-		for (int i=0; i<matriuSales.length; i++) {
-			for (int f=0; f<matriuSales[i].length; f++) {
+		for (int i=0; i<this.matriuSales.length; i++) {
+			for (int f=0; f<this.matriuSales[i].length; f++) {
 				// MIRA SI HAY MONSTER
-				if (matriuSales[i][f].isMonstre() == true) {
+				if (this.matriuSales[i][f].isMonstre() == true) {
 					nombreMonstres++;
 
 				}
 				// MIRA SI HAY TESORO
-				if (matriuSales[i][f].isTresor() == true) {
+				if (this.matriuSales[i][f].isTresor() == true) {
 					nombreTresors++;
 
 				}
@@ -44,8 +44,8 @@ public class Masmorra extends Joc {
 
 		}
 
-		arrayMonstres = new Monstre[nombreMonstres];
-		arrayTresors = new Tresor[nombreTresors];
+		this.arrayMonstres = new Monstre[nombreMonstres];
+		this.arrayTresors = new Tresor[nombreTresors];
 
 	}
 	
@@ -53,9 +53,9 @@ public class Masmorra extends Joc {
 	 * Funció que genera objectes Sala dintre de la matriu Masmorra
 	 */
 	private void crearSales() {
-		for (int i=0; i<matriuSales.length; i++) {
-			for (int f=0; f<matriuSales[i].length; f++) {
-				matriuSales[i][f] = new Sala();
+		for (int i=0; i<this.matriuSales.length; i++) {
+			for (int f=0; f<this.matriuSales[i].length; f++) {
+				this.matriuSales[i][f] = new Sala();
 
 			}
 
@@ -95,13 +95,23 @@ public class Masmorra extends Joc {
 	 * Funció que mostra la vista de la matriu 
 	 * @param masmorra
 	 */
-	public static void generarVista(Masmorra masmorra) {
+	public static void generarVista(Masmorra masmorra, Personatge personatge) {
 		for (int i=0; i<masmorra.matriuSales.length; i++) {
 			for (int f=0; f<masmorra.matriuSales[i].length; f++) {
-				System.out.println(masmorra.matriuSales[i][f]);
+				if (i == personatge.getPosicio(personatge).x && f == personatge.getPosicio(personatge).y) {
+					System.out.print("(&)");
+					
+				} else if (masmorra.matriuSales[i][f].getExplorada() == true) {
+					System.out.print("(*)");
+					
+				} else {
+					System.out.print("(-)");
+					
+				}
+				
 
 			}
-
+			System.out.println();
 		}
 
 	}
