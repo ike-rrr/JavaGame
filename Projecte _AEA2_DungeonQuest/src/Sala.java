@@ -140,3 +140,6 @@ public class Sala extends Joc {
 	
 
 }
+
+
+

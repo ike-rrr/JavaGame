@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Masmorra extends Joc {
+public class Masmorra {
 
 	// Propietats
 	private Monstre[] arrayMonstres = new Monstre[0];

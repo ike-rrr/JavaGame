@@ -12,15 +12,16 @@ public class Personatge extends Joc {
 	private Point posicio = new Point();
 	private String[] equipament;
 	private int[][] matriuRandom = new int[4][4];
-	
+
 	// Constructors
 	public Personatge(String nom) {
 		this.nom = nom;
 		generarValorsPersonatge();
-		
+
 	}
-	
+
 	//Getters i Setters
+
 	/**
 	 * Funció que retorna la posició del Personatge
 	 * @return
@@ -29,11 +30,32 @@ public class Personatge extends Joc {
 		return personatge.posicio;
 	}
 	
-	
-	
+	public static void setPosicio(Personatge personatge, int x, int y) {
+		personatge.posicio.x = x;
+		personatge.posicio.y = y;
+		
+	}
+
 	
 	// Mètodes 
 	
+    public void utilitzarFum (boolean uso, int valor) {
+    	usTresor = uso;
+    	valor = valor;
+    		
+    	// FUNCIÓN PARA USAR EL HUMO QUE NOS TELETRANSPORTA A UN LUIGAR ALEATORIO
+    	if(usTresor) {
+    		if(valor >= 10){
+    			Personatge.setPosicio(null, valor, valor);
+    			valor -= 10;
+    		}else {
+    			System.out.println("No hi ha fum suficient");
+    		}
+    	}else
+    		System.out.println("Aquest tresor no té us");
+    }
+	
+
 	/**
 	 * Funció que assigna automàticament els valors d'una instància de 'Personatge'
 	 */
@@ -59,45 +81,69 @@ public class Personatge extends Joc {
 		case 'N': {
 				this.posicio.move(posicio.x, posicio.y - 1);
 
-			break;
+			// Comprobem que si restem o sumem 1 a la posició no sortim de la matriu.
+			if (!estaFora(posicio.y, this.matriuRandom.length)) {
+				this.posicio.move(0, posicio.y + 1);
+
+			}
 			
+			break;
+
 		} case 'S': {
+
 				this.posicio.move(posicio.x, posicio.y + 1);
 				
 
+
+			if (!estaFora(posicio.y, this.matriuRandom.length)) {
+				this.posicio.move(0, posicio.y - 1);
+
+			}
+
 			break;
-			
+
 		} case 'E': {
+
 				this.posicio.move(posicio.x - 1, posicio.y);
 				
+
+			if (!estaFora(posicio.x, this.matriuRandom[0].length)) {
+				this.posicio.move(posicio.x + 1, 0);
+
+			}
+
 			break;
-			
+
 		} case 'O': {
+
 				this.posicio.move(posicio.x + 1, posicio.y);
+
+			if (!estaFora(posicio.x, this.matriuRandom[0].length)) {
+				this.posicio.move(posicio.x - 1, 0);
+
+			}
+
 			break;
-			
+
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + direccio);
-			
+
 		}
 	}
-	
+
 	/**
 	 * Funció que comproba si una sala ha sigut explorada i l'assigna
 	 */
 	public void explorarSala() {
-		
-		
+
+
 	}
-	
+
 	@Override
 	public String toString() {
 		return "[nom=" + nom + ", vida=" + vida + ", atac=" + atac + ", experiencia=" + experiencia
 				+ ", agilitat=" + agilitat + ", forsa=" + forsa + ", posició=" + posicio + ", equipament="
 				+ Arrays.toString(equipament) + "]";
-	}
-	
-	
-	
+	}	
 }

@@ -1,52 +1,66 @@
 public class Tresor extends Joc {
-	// Propietats
-	private String nom;
-	private int valor;
-	private double pes;
-	private String[] nomsTresor = {"Reliquies Dorades", "Recompenses Obscures", "Cofre de Combat"};
-	
-	// Constructors
-	public Tresor() {
-		generarValorsTresor();
-		
-	}
-	
-	// Getters i Setters
+    // Propietats
+    private String nom;
+    private int valor;
+    private double pes;
+    private String[] nomsTresor = {"Reliquies Dorades", "Recompenses Obscures", "Cofre de Combat", "Frasc de fum ancestral"};
 
-	public int getValor() {
-		return valor;
-	}
+    private boolean usTresor = false;
 
-	public String getNom() {
-		return nom;
-	}
+    // Constructors
+    public Tresor() {
+        generarValorsTresor();
+    }
 
-	public double getPes() {
-		return pes;
-	}
-	
-	
-	// Mètodes
-	/**
-	 * Funció que assigna automàticament els valors d'una instància de 'Tresor'
-	 */
-	public void generarValorsTresor() {
-		String [] array = this.nomsTresor;
-		// El nom és una selecció aleatoria d'un valor de l'array de noms.
-		this.nom = array[generarValorAleatori(0, array.length - 1)];
-		this.valor = generarValorAleatori(100, 3_000);
-		// Cada moneda d'or multiplicada pel seu pes sense tenir en compte el cofre.
-		this.pes = this.valor * 0.0075;
-		
-	}
+    // Getters i Setters
+    public void setNom(String nom) {
+        this.nom = nom;
+        usTresor = "Frasc de fum ancestral".equals(nom.trim()); 
+    }
 
-	@Override
-	public String toString() {
-		return "[nom=" + nom + ", valor=" + valor + ", pes=" + pes + "]";
-	}
-	
-	
-	
-	
-	
+    public boolean isUsTresor() {
+        return usTresor;
+    }
+    
+    public int getValor() {
+        return valor;
+    }
+
+    public boolean getUsTresor() { 
+        return usTresor;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public double getPes() {
+        return pes;
+    }
+
+    // Mètodes
+    public void generarValorsTresor() {
+        String[] array = this.nomsTresor;
+        this.nom = array[generarValorAleatori(0, array.length - 1)];
+        this.valor = generarValorAleatori(100, 3_000);
+        this.pes = this.valor * 0.0075;
+
+        setNom(this.nom);
+    }
+    
+    // Función que nos dice si tiene uso o no
+    private String mostrarMissatge() {
+        if (usTresor) {
+            return "Genera un núvol de fum ancestral que et porta a una altre punt a l'atzar (perd valor cada vegada que s'utilitza)";
+        } else {
+            return "Aquest tresor no té cap ús fora del seu valor";
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return "[nom=" + nom + ", valor=" + valor + ", pes=" + pes + ", " + mostrarMissatge() + "]";
+    }
 }
+
+

@@ -73,4 +73,3 @@ public class Monstre {
 		this.penalitzacio = penalitzacio;
 	}
 } 
-

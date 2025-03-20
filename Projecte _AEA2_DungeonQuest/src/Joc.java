@@ -9,7 +9,7 @@ public class Joc {
 	 * @param longitudArray
 	 * @return
 	 */
-	protected boolean estaFora(int posicio, int longitudArray) {
+	public boolean estaFora(int posicio, int longitudArray) {
 		return (posicio < 0 || posicio > longitudArray);
 		
 	}
@@ -21,7 +21,7 @@ public class Joc {
 	 * @param max
 	 * @return
 	 */
-	protected static int generarValorAleatori(int min, int max) {
+	public int generarValorAleatori(int min, int max) {
 		Random random = new Random();
 		return (random.nextInt(max - min + 1) + min);
 		
