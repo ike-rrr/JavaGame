@@ -10,8 +10,7 @@ public class Personatge extends Joc {
 	private int agilitat;
 	private int forsa;
 	private Point posicio = new Point();
-	private String[] equipament;
-	private int[][] matriuRandom = new int[4][4];
+	private Tresor[] equipament;
 
 	// Constructors
 	public Personatge(String nom) {
@@ -30,24 +29,28 @@ public class Personatge extends Joc {
 		return personatge.posicio;
 	}
 	
-	public static void setPosicio(Personatge personatge, int x, int y) {
-		personatge.posicio.x = x;
-		personatge.posicio.y = y;
+	private void setPosicio(int x, int y) {
+		this.posicio.x = x;
+		this.posicio.y = y;
 		
 	}
 
 	
 	// Mètodes 
-	
-    public void utilitzarFum (boolean uso, int valor) {
-    	usTresor = uso;
-    	valor = valor;
-    		
+	/**
+	 * Funció que utilitza l'objecte seleccionat si es que és possible
+	 */
+    public void utilitzarTresor (int i) {
+    	Tresor objTresor = this.equipament[i];
+    	int valor = this.equipament[i].getValor();
+    	boolean usTresor = this.equipament[i].getUsTresor();
+    	
     	// FUNCIÓN PARA USAR EL HUMO QUE NOS TELETRANSPORTA A UN LUIGAR ALEATORIO
     	if(usTresor) {
-    		if(valor >= 10){
-    			Personatge.setPosicio(null, valor, valor);
-    			valor -= 10;
+    		if(valor >= 100){
+    												//HACERLO VARIABLE
+    			this.setPosicio(generarValorAleatori(0, 10), generarValorAleatori(0, 10));
+    			valor -= 100;
     		}else {
     			System.out.println("No hi ha fum suficient");
     		}
@@ -62,13 +65,13 @@ public class Personatge extends Joc {
 	public void generarValorsPersonatge() {
 		this.vida = generarValorAleatori(5, 20);
 		this.atac = generarValorAleatori(1, 4);
-		this.posicio.setLocation(0, 0);
+		this.posicio.setLocation(1, 0);
 		this.experiencia = 0;
 		this.agilitat = generarValorAleatori(4, 11);
 		this.forsa = generarValorAleatori(4, 11);
 		
 		// La mida de l'array és igual a la força del Personatge.
-		this.equipament = new String[atac];
+		this.equipament = new Tresor[atac];
 
 	}
 
@@ -79,50 +82,19 @@ public class Personatge extends Joc {
 	public void mourePersonatge(char direccio) {
 		switch (direccio) {
 		case 'N': {
-				this.posicio.move(posicio.x, posicio.y - 1);
-
-			// Comprobem que si restem o sumem 1 a la posició no sortim de la matriu.
-			if (!estaFora(posicio.y, this.matriuRandom.length)) {
-				this.posicio.move(0, posicio.y + 1);
-
-			}
-			
+			this.posicio.move(posicio.x - 1, posicio.y);
 			break;
 
 		} case 'S': {
-
-				this.posicio.move(posicio.x, posicio.y + 1);
-				
-
-
-			if (!estaFora(posicio.y, this.matriuRandom.length)) {
-				this.posicio.move(0, posicio.y - 1);
-
-			}
-
+			this.posicio.move(posicio.x + 1, posicio.y);
 			break;
 
 		} case 'E': {
-
-				this.posicio.move(posicio.x - 1, posicio.y);
-				
-
-			if (!estaFora(posicio.x, this.matriuRandom[0].length)) {
-				this.posicio.move(posicio.x + 1, 0);
-
-			}
-
+			this.posicio.move(posicio.x, posicio.y + 1);
 			break;
 
 		} case 'O': {
-
-				this.posicio.move(posicio.x + 1, posicio.y);
-
-			if (!estaFora(posicio.x, this.matriuRandom[0].length)) {
-				this.posicio.move(posicio.x - 1, 0);
-
-			}
-
+			this.posicio.move(posicio.x + 1, posicio.y - 1);
 			break;
 
 		}

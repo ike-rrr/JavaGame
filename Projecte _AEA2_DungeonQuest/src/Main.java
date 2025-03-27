@@ -15,14 +15,10 @@ public class Main {
 		System.out.println(tresor);
 		System.out.println(personatge);
 		Masmorra.generarVista(masmorra, personatge);
-
+		System.out.println();
 		Monstre monstre = new Monstre(2);
-		
-		System.out.println("sala: " + sala);
-		System.out.println("tresor: " + tresor);
-		System.out.println("personatge: " + personatge);
-		System.out.println("monstre: " + monstre);
-		
+		personatge.mourePersonatge('N');
+		Masmorra.generarVista(masmorra, personatge);
 	}
 
 }
