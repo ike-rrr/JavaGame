@@ -1,54 +1,45 @@
 import java.util.Random;
 
 public class Sala extends Joc {
-	// PROPIEDADES
-
 	private String tipus;
-
-	private boolean tresor ;
-
+	private boolean tresor;
 	private boolean monstre;
-
-	private int numPortes;
-
 	private boolean explorada;
-
 	private Monstre monstreObj;
-	
 	private Tresor tresorObj;
-
-	// CONSTRUCTORES
+	private boolean portaN;
+	private boolean portaS;
+	private boolean portaE;
+	private boolean portaO;
 
 	public Sala(){
-
-		if(tipoSala() <= 70) {
+		int tipusSala = tipoSala();
+		if(tipusSala <= 70) {
 			tipus = "Normal";
-		}else if (tipoSala() <= 85) {
+		} else if (tipusSala <= 85) {
 			tipus = "Pont";
-
-		}else {
-			tipus = "Teranyna";
-
+		} else {
+			tipus = "Teranyina";
 		}
 
-		// Determina de manera aleatoria si existeix o no Tresor
 		tresor = apareixer();
-
-		// Determina de manera aleatoria si existeix o no Monstre
 		monstre = apareixer();
-
-		// Genera un objecte de categoria Tresor
 		generarTresor();
-		
-		// Genera un objecte de categoria Monstre
 		generarMonstre();
-		
+
+		portaN = apareixer();
+		portaS = apareixer();
+		setPortaE(apareixer());
+		portaO = apareixer();
+
+		// Asegurar al menos una puerta
+		if(!portaN && !portaS && !isPortaE() && !portaO) {
+			setPortaE(true);
+		}
+
 		explorada = false;
 	}
 
-
-
-	// Getters i Setters
 	public void setExplorada(boolean explorada) {
 		this.explorada = explorada;
 	}
@@ -57,89 +48,71 @@ public class Sala extends Joc {
 		return this.explorada;
 	}
 
+	public boolean hasPortaN() { return portaN; }
+	public boolean hasPortaS() { return portaS; }
+	public boolean hasPortaE() { return isPortaE(); }
+	public boolean hasPortaO() { return portaO; }
 
-	// MÉTODOS
-
-	/**
-	 * Funció que retorna un boolean aleatori
-	 * @return
-	 */
 	private boolean apareixer() {
-		Random rand = new Random ();
-		boolean randomBoolean = rand.nextBoolean();
-		return randomBoolean;
-
+		Random rand = new Random();
+		return rand.nextBoolean();
 	}
-	
-	/**
-	 * Funció que retorna si existeix un Tresor a la Sala
-	 * @return tresor
-	 */
+
 	public boolean isTresor() {
 		return tresor;
 	}
-	
-	/**
-	 * Funció que retorna l'objecte Tresor
-	 * @return
-	 */
+
 	public Tresor getRecompensa() {
 		return this.tresorObj;
 	}
 
-	/**
-	 * Funció que retorna si existeix un Monstre a la Sala
-	 * @return monstre 
-	 */
 	public boolean isMonstre() {
 		return monstre;
 	}
-	
-	/**
-	 * Funció que retorna l'objecte Monstre
-	 * @return
-	 */
+
 	public Monstre getEnemic() {
 		return this.monstreObj;
 	}
-	
-	/**
-	 * Funció que genera un Monstre aleatori si el boolean == true
-	 */
+
 	private void generarMonstre() {
 		if (this.monstre) {
 			monstreObj = new Monstre(generarValorAleatori(5, 20));
 		}
 	}
 
-	/**
-	 * Funció que genera un Tresor aleatori si el boolean == true
-	 */
 	private void generarTresor() {
-		if (this.tresor) {
-			tresorObj = new Tresor();
+		boolean tresorUs = apareixer();
+		if (this.tresor && tresorUs) {
+			tresorObj = new TresorAmbUs();
+		} else if (this.tresor) {
+			tresorObj = new TresorSenseUs();
 		}
 	}
 
-	/**
-	 * Funció que determina el tipus de sala aleatoriament
-	 * @return
-	 */
 	private int tipoSala() {
-		Random num = new Random ();
-		int randomInt= num.nextInt(101);
-		return randomInt;
-
+		Random num = new Random();
+		return num.nextInt(101);
 	}
 
 	@Override
 	public String toString() {
-		return "Sala [tipus= " + tipus + ", tresor= " + tresor + ", monstre= " + monstre + ", numPortes= " + numPortes
-				+ ", explorada= " + explorada +  (monstreObj != null ? ", Monstre= " + monstreObj.toString() : ", Sense Monstre") + "]";
+		String sortides = "Sortides: ";
+		sortides += (portaN ? "N" : "");
+		sortides += (portaS ? "S" : "");
+		sortides += (isPortaE() ? "E" : "");
+		sortides += (portaO ? "O" : "");
+
+		return "Sala [tipus=" + tipus + 
+				(monstreObj != null ? ", Monstre=" + monstreObj.toString() : "") + 
+				(tresorObj != null ? ", Tresor=" + tresorObj.toString() : "") +
+				", " + sortides + "]";
 	}
-	
 
+	public boolean isPortaE() {
+		return portaE;
+	}
+
+	public void setPortaE(boolean portaE) {
+		this.portaE = portaE;
+	}
 }
-
-
-

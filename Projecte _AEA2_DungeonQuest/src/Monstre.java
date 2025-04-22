@@ -1,75 +1,51 @@
-
 import java.util.Random;
 
 public class Monstre {
-
-    // PROPIETATS
-
     private String nom;
-
     private int vida;
-
     private int penalitzacio;
-
-    // ARRAY AMB NOMS GENERATS 
-
-      String[] dndNames = {
-                "Aelar", "Barak", "Cindel", "Draegor", "Elira", "Fendral", "Garrick", "Halessa", 
-                "Ithrin", "Jareth", "Kellian", "Lirael", "Merrik", "Nimriel", "Orrin", "Phaedra", 
-                "Quenlan", "Roderic", "Sylas", "Talyra", "Ulfgar", "Varel", "Wrenna", "Xerxes", 
-                "Ysolde", "Zethar", "Balin", "Caelen", "Daphne", "Eryndor", "Faelan", "Galen", 
-                "Hadria", "Ilvani", "Jorik", "Kara", "Lirien", "Morrin", "Norrak", "Orla", 
-                "Perrin", "Rhiannon"
-            };
-
-
-    // CONSTRUCTORS
+    String[] dndNames = {
+        "Aelar", "Barak", "Cindel", "Draegor", "Elira", "Fendral", "Garrick", "Halessa", 
+        "Ithrin", "Jareth", "Kellian", "Lirael", "Merrik", "Nimriel", "Orrin", "Phaedra", 
+        "Quenlan", "Roderic", "Sylas", "Talyra", "Ulfgar", "Varel", "Wrenna", "Xerxes", 
+        "Ysolde", "Zethar", "Balin", "Caelen", "Daphne", "Eryndor", "Faelan", "Galen", 
+        "Hadria", "Ilvani", "Jorik", "Kara", "Lirien", "Morrin", "Norrak", "Orla", 
+        "Perrin", "Rhiannon", "Rathalos", "Rathian"
+    };
 
     Monstre(int vida){
-
-        // GENERAR NOM DE MONSTRE ALEATORI
         Random rand = new Random();
         int index = rand.nextInt(dndNames.length);
         nom = dndNames[index];
-
         this.vida = vida;
-
-        // GENERAR VALOR D'ATAC ALEATORI
         penalitzacio = rand.nextInt(4);
-
     }
-    // MÈTODES
 
     public int penalitzar() {
-    	
         return penalitzacio;
     }
-
-    // TO STRING
 
     public String toString() {
         return nom + " - " + vida;
     }
     
-    // GETTERS I SETTERS
+    public String getNom() {
+        return nom;
+    }
     
-	public String getNom() {
-		return nom;
-	}
-	
-	public int getVida() {
-		return vida;
-	}
+    public int getVida() {
+        return vida;
+    }
 
-	public void setVida(int vida) {
-		this.vida = vida;
-	}
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
 
-	public int getPenalitzacio() {
-		return penalitzacio;
-	}
+    public int getPenalitzacio() {
+        return penalitzacio;
+    }
 
-	public void setPenalitzacio(int penalitzacio) {
-		this.penalitzacio = penalitzacio;
-	}
-} 
+    public void setPenalitzacio(int penalitzacio) {
+        this.penalitzacio = penalitzacio;
+    }
+}
