@@ -9,7 +9,7 @@ public class Sala extends Joc {
 
 	private boolean monstre;
 
-	private int numPortes;
+	private boolean[] arrayPortes = {false, false, false, false};
 
 	private boolean explorada;
 
@@ -31,17 +31,20 @@ public class Sala extends Joc {
 
 		}
 
-		// Determina de manera aleatoria si existeix o no Tresor
+		// Determina de manera aleatoria si existeix o no Tresor.
 		tresor = apareixer();
 
-		// Determina de manera aleatoria si existeix o no Monstre
+		// Determina de manera aleatoria si existeix o no Monstre.
 		monstre = apareixer();
 
-		// Genera un objecte de categoria Tresor
+		// Genera un objecte de categoria Tresor.
 		generarTresor();
 		
-		// Genera un objecte de categoria Monstre
+		// Genera un objecte de categoria Monstre.
 		generarMonstre();
+		
+		// Generem les possibles sortides.
+		determinarPortes();
 		
 		explorada = false;
 	}
@@ -57,22 +60,12 @@ public class Sala extends Joc {
 		return this.explorada;
 	}
 
-
-	// MÉTODOS
-
-	/**
-	 * Funció que retorna un boolean aleatori
-	 * @return
-	 */
-	private boolean apareixer() {
-		Random rand = new Random ();
-		boolean randomBoolean = rand.nextBoolean();
-		return randomBoolean;
-
+	public String getTipus() {
+		return tipus;
 	}
-	
+
 	/**
-	 * Funció que retorna si existeix un Tresor a la Sala
+	 * Funció que retorna si existeix un Tresor a la Sala.
 	 * @return tresor
 	 */
 	public boolean isTresor() {
@@ -102,18 +95,33 @@ public class Sala extends Joc {
 	public Monstre getEnemic() {
 		return this.monstreObj;
 	}
+
+	public boolean[] getPortes() {
+		return this.arrayPortes;
+	}
+	
+	// MÉTODOS
+	/**
+	 * Funció que retorna un boolean aleatori.
+	 * @return
+	 */
+	private boolean apareixer() { 
+		Random random = new Random();
+		return random.nextBoolean();
+
+	}
 	
 	/**
-	 * Funció que genera un Monstre aleatori si el boolean == true
+	 * Funció que genera un Monstre aleatori si el boolean == true.
 	 */
 	private void generarMonstre() {
 		if (this.monstre) {
-			monstreObj = new Monstre(generarValorAleatori(5, 20));
+			monstreObj = new Monstre();
 		}
 	}
 
 	/**
-	 * Funció que genera un Tresor aleatori si el boolean == true
+	 * Funció que genera un Tresor aleatori si el boolean == true.
 	 */
 	private void generarTresor() {
 		if (this.tresor) {
@@ -122,7 +130,7 @@ public class Sala extends Joc {
 	}
 
 	/**
-	 * Funció que determina el tipus de sala aleatoriament
+	 * Funció que determina el tipus de sala aleatòriament.
 	 * @return
 	 */
 	private int tipoSala() {
@@ -131,11 +139,21 @@ public class Sala extends Joc {
 		return randomInt;
 
 	}
+	
+	/**
+	 * Funció que genera el valor de les portes aleatòriament.
+	 */
+	private void determinarPortes() {
+		Random random = new Random();
+		// Els valors de l'array són N, S, E, O.
+		for (int i=0;i<4;i++) {
+			this.arrayPortes[i] = random.nextBoolean();
+		}
+	}
 
 	@Override
 	public String toString() {
-		return "Sala [tipus= " + tipus + ", tresor= " + tresor + ", monstre= " + monstre + ", numPortes= " + numPortes
-				+ ", explorada= " + explorada +  (monstreObj != null ? ", Monstre= " + monstreObj.toString() : ", Sense Monstre") + "]";
+		return "Sala | tipus: " + tipus + ", tresor: " + tresor +  (monstreObj != null ? ", Monstre: " + monstreObj.toString() : ", Sense Monstre") + (tresorObj != null ? ", Tresor: " + tresorObj.toString() : ", Sense Tresor") + ".";
 	}
 	
 

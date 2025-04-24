@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public abstract class Joc {
 
@@ -25,5 +26,19 @@ public abstract class Joc {
 		Random random = new Random();
 		return (random.nextInt(max - min + 1) + min);
 		
+	}
+	
+	/**
+	 * Funció que demana una resposta a l'usuari de valor numèric.
+	 */
+	public int demanarResposta(int longitud) {
+		Scanner teclado = new Scanner(System.in);
+		Integer resposta;
+		// Demanara una resposta fins que aquesta no surti dels marges determinats.
+		do {
+			System.out.println("Ingresa un número del llistat");
+			 resposta = teclado.nextInt();
+		} while ((resposta < 1 || resposta > longitud));
+		return resposta;
 	}
 }

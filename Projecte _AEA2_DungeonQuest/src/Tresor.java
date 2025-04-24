@@ -51,7 +51,7 @@ public class Tresor extends Joc {
     
     @Override
     public String toString() {
-        return "[nom=" + nom + ", valor=" + valor + ", pes=" + pes + ", " + mostrarMissatge() + "]";
+        return "nom:" + nom + ", valor:" + valor + ", pes:" + pes + ", " + mostrarMissatge() + ".";
     }
 }
 

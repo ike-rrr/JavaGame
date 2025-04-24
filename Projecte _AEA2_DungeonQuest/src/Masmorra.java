@@ -1,52 +1,52 @@
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Scanner;
 
-public class Masmorra {
+public class Masmorra extends Joc {
 
 	// Propietats
 	private Monstre[] arrayMonstres = new Monstre[0];
 	private Tresor[] arrayTresors = new Tresor[0];
 	private Sala[][] matriuSales = new Sala[10][10];
+	private Personatge jugador;
 	private int nombreMonstres = 0;
 	private int nombreTresors = 0;
-	
+
 	// Constructors
-	public Masmorra() {
+	public Masmorra(Personatge jugador) {
 		// Generem array del tamany de la Masmorra per contenir els monstres i els tresors.
+		this.jugador = jugador;
 		crearSales();
 		tamanyArrays();
 		omplirMasmorra();
 
-
 	}
 
 	// Getters i Setters
-	public static Sala[][] getMatriuSales(Masmorra masmorra) {
-		return masmorra.matriuSales;
-		
+	public Sala[][] getMatriuSales() {
+		return matriuSales;
 	}
-	
-
 
 	// Mètodes
 	/**
-	 * Funció que conta el nombre de monstres / tresors i assigna una dimensió a les arrays corresponents per contenir-les
+	 * Funció que conta el nombre de monstres / tresors i assigna una dimensió a les arrays corresponents per contenir-les.
 	 */
 	private void tamanyArrays() {
 		for (int i=0; i<this.matriuSales.length; i++) {
 			for (int f=0; f<this.matriuSales[i].length; f++) {
-				// MIRA SI HAY MONSTER
+				// asegura si n'hi ha monstre.
 				if (this.matriuSales[i][f].isMonstre() == true) {
 					nombreMonstres++;
 
 				}
-				// MIRA SI HAY TESORO
+				// mira si n'hi ha tresor.
 				if (this.matriuSales[i][f].isTresor() == true) {
 					nombreTresors++;
 
 				}
-
 			}
-
 		}
 
 		this.arrayMonstres = new Monstre[nombreMonstres];
@@ -55,7 +55,7 @@ public class Masmorra {
 	}
 
 	/**
-	 * Funció que genera objectes Sala dintre de la matriu Masmorra
+	 * Funció que genera objectes Sala dintre de la matriu Masmorra.
 	 */
 	private void crearSales() {
 		for (int i=0; i<this.matriuSales.length; i++) {
@@ -63,13 +63,11 @@ public class Masmorra {
 				this.matriuSales[i][f] = new Sala();
 
 			}
-
 		}
-		
 	}
 
 	/**
-	 * Funció que ompleix les arrays de Monstres i Tresors 
+	 * Funció que ompleix les arrays de Monstres i Tresors. 
 	 */
 	private void omplirMasmorra() {
 		int contadorMonstre = 0;
@@ -89,7 +87,6 @@ public class Masmorra {
 					contadorTresor++;
 
 				}
-
 			}
 		}
 		return;
@@ -97,28 +94,140 @@ public class Masmorra {
 
 
 	/**
-	 * Funció que mostra la vista de la matriu 
+	 * Funció que mostra la vista de la matriu. 
 	 * @param masmorra
 	 */
-	public static void generarVista(Masmorra masmorra, Personatge personatge) {
-		for (int i=0; i<masmorra.matriuSales.length; i++) {
-			for (int f=0; f<masmorra.matriuSales[i].length; f++) {
-				if (i == personatge.getPosicio(personatge).x && f == personatge.getPosicio(personatge).y) {
+	public void generarVista() {
+		Point posicioActual =  this.jugador.getPosicio();
+		for (int i=0; i<this.matriuSales.length; i++) {
+			for (int f=0; f<this.matriuSales[i].length; f++) {
+				if (i == posicioActual.x && f == posicioActual.y) {
 					System.out.print("(&)");
-					
-				} else if (masmorra.matriuSales[i][f].getExplorada() == true) {
+
+				} else if (this.matriuSales[i][f].getExplorada() == true) {
 					System.out.print("(*)");
-					
+
 				} else {
 					System.out.print("(-)");
-					
-				}
-				
 
+				}
 			}
 			System.out.println();
 		}
+	}
 
+	/**
+	 * Funció que mostra les opcions que té el Personatge.
+	 */
+	public void mostrarMenu() {
+		generarVista();
+		Scanner teclado = new Scanner(System.in);
+		System.out.println("que escolleixes fer ara?");
+		System.out.println("1 | Moure a una altra sala");
+		System.out.println("2 | Utilitzar un tresor de l'inventari");
+		System.out.println("3 | Explorar aquesta sala");
+		determinarAccio(demanarResposta(3));
+
+	}
+
+	public void determinarAccio(int valor) {
+		switch (valor) {
+		case 1: {
+			mostrarSortides();
+			break;
+
+		} case 2: {
+			mostrarUtils();
+			break;
+
+		} case 3: {
+			explorarSala();
+			break;
+
+		}
+		default:
+			throw new IllegalArgumentException("Incorrecte: " + valor);
+		}
+
+	}
+
+	/**
+	 * Funció que mostra les possibles direccions.
+	 */
+	public void mostrarSortides() {
+		Point posicioActual =  this.jugador.getPosicio();
+		String tipusSala = this.matriuSales[posicioActual.x][posicioActual.y].getTipus();
+		System.out.println(tipusSala);
+		if (!(tipusSala.equalsIgnoreCase("Normal"))) {
+			generarProba(tipusSala);
+
+		}
+		
+		// Agafa tots els valors possibles i els afegeix en ordre.
+		boolean[] arrayDireccions = this.matriuSales[this.jugador.getPosicio().x][this.jugador.getPosicio().y].getPortes();
+		int numeracio = 0;
+		String[] arrayValors = {"Nort", "Sud", "Est", "Oest"};
+		String[] valorsPossibles = new String[4];
+		for (int i=0;i<4;i++) {
+			if (arrayDireccions[i]) {
+				valorsPossibles[numeracio] = arrayValors[i];
+				System.out.println((numeracio + 1) + " | " + "Moure en direcció " + arrayValors[i] + ".");
+				numeracio++;
+			}
+		}
+
+		this.jugador.mourePersonatge(valorsPossibles[demanarResposta(numeracio) - 1]);
+	}
+
+	private void generarProba(String tipus) {
+		boolean exit = false;
+		Scanner teclado = new Scanner(System.in);
+		if (tipus.equalsIgnoreCase("Teranyina")) {
+			do { 
+				System.out.println("Dona un intent de sortida");
+				teclado.nextLine();
+				if (generarValorAleatori(1, 12) <= this.jugador.getForsa()) {
+					System.out.println("Has tingut exit!!!");
+					exit = true;
+				} else {
+					System.out.println("No has tingut la suficient força!!!");
+				}
+			} while (exit == false);
+
+		} else if (tipus.equalsIgnoreCase("Pont")) {
+			do {
+				System.out.println("Dona un intent de sortida");
+				teclado.nextLine();
+				if (generarValorAleatori(1, 12) <= this.jugador.getAgilitat()) {
+					System.out.println("Has tingut exit!!!");
+					exit = true;
+				} else {
+					System.out.println("No has tingut la suficient agilitat!!!");
+				}
+			} while (exit == false);
+		}
+	}
+
+	private void mostrarUtils() {
+		ArrayList<Tresor> inventari = this.jugador.getEquipament();
+		int numeracio = 1;
+		for (Tresor tresor : inventari) {
+			if (tresor.getUsTresor()) {
+				System.out.println(numeracio + " | " + tresor.getNom());
+				numeracio++;
+			}
+		}
+		// Si existeix algun objecte amb utilitat més enllá del seu valor.
+		if (numeracio != 1) {
+			demanarResposta(numeracio);
+			this.jugador.utilitzarTresor(numeracio);
+		} else {
+			System.out.println("No disposes de tresors amb utilitats activables.");
+		}
+	}
+
+	private void explorarSala() {
+		this.jugador.explorarSala();
 	}
 
 }

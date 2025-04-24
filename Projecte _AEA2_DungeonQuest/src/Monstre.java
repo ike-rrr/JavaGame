@@ -1,7 +1,7 @@
 
 import java.util.Random;
 
-public class Monstre {
+public class Monstre extends Joc {
 
     // PROPIETATS
 
@@ -13,7 +13,7 @@ public class Monstre {
 
     // ARRAY AMB NOMS GENERATS 
 
-      String[] dndNames = {
+      String[] arrayNoms = {
                 "Aelar", "Barak", "Cindel", "Draegor", "Elira", "Fendral", "Garrick", "Halessa", 
                 "Ithrin", "Jareth", "Kellian", "Lirael", "Merrik", "Nimriel", "Orrin", "Phaedra", 
                 "Quenlan", "Roderic", "Sylas", "Talyra", "Ulfgar", "Varel", "Wrenna", "Xerxes", 
@@ -25,25 +25,20 @@ public class Monstre {
 
     // CONSTRUCTORS
 
-    Monstre(int vida){
+    Monstre(){
 
         // GENERAR NOM DE MONSTRE ALEATORI
         Random rand = new Random();
-        int index = rand.nextInt(dndNames.length);
-        nom = dndNames[index];
+        int index = rand.nextInt(arrayNoms.length);
+        nom = arrayNoms[index];
 
-        this.vida = vida;
+        this.vida = generarValorAleatori(5, 20);
 
         // GENERAR VALOR D'ATAC ALEATORI
         penalitzacio = rand.nextInt(4);
 
     }
     // MÈTODES
-
-    public int penalitzar() {
-    	
-        return penalitzacio;
-    }
 
     // TO STRING
 
