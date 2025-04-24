@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Joc {
+public abstract class Joc {
 
 	// Mètodes del Joc 
 	/**
