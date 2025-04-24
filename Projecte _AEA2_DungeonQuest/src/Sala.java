@@ -32,7 +32,6 @@ public class Sala extends Joc {
 		setPortaE(apareixer());
 		portaO = apareixer();
 
-		// Asegurar al menos una puerta
 		if(!portaN && !portaS && !isPortaE() && !portaO) {
 			setPortaE(true);
 		}
