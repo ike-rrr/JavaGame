@@ -119,22 +119,21 @@ public class Masmorra extends Joc {
 	/**
 	 * Funció que mostra les opcions que té el Personatge.
 	 */
-	public void mostrarMenu() {
+	public boolean mostrarMenu() {
 		generarVista();
 		Scanner teclado = new Scanner(System.in);
 		System.out.println("que escolleixes fer ara?");
 		System.out.println("1 | Moure a una altra sala");
 		System.out.println("2 | Utilitzar un tresor de l'inventari");
 		System.out.println("3 | Explorar aquesta sala");
-		determinarAccio(demanarResposta(3));
-
+		boolean haFinalitzat = determinarAccio(demanarResposta(3));
+		return haFinalitzat;
 	}
 
-	public void determinarAccio(int valor) {
+	public boolean determinarAccio(int valor) {
 		switch (valor) {
 		case 1: {
-			mostrarSortides();
-			break;
+			return mostrarSortides();
 
 		} case 2: {
 			mostrarUtils();
@@ -148,13 +147,13 @@ public class Masmorra extends Joc {
 		default:
 			throw new IllegalArgumentException("Incorrecte: " + valor);
 		}
-
+		return false;
 	}
 
 	/**
 	 * Funció que mostra les possibles direccions.
 	 */
-	public void mostrarSortides() {
+	public boolean mostrarSortides() {
 		Point posicioActual =  this.jugador.getPosicio();
 		String tipusSala = this.matriuSales[posicioActual.x][posicioActual.y].getTipus();
 		System.out.println(tipusSala);
@@ -175,8 +174,17 @@ public class Masmorra extends Joc {
 				numeracio++;
 			}
 		}
+		
+		// Si malhauradament no s'ha generat ni una sola porta l'haurem de forçar.
+		if (numeracio == 0) {
+			int numeroAleatori = generarValorAleatori(0, 3);
+			valorsPossibles[numeracio] = arrayValors[numeroAleatori];
+			System.out.println((numeracio + 1) + " | " + "Moure en direcció " + arrayValors[numeroAleatori] + ".");
+			arrayDireccions[numeroAleatori] = true;
+		}
 
-		this.jugador.mourePersonatge(valorsPossibles[demanarResposta(numeracio) - 1]);
+		boolean haFinalitzat = this.jugador.mourePersonatge(valorsPossibles[demanarResposta(numeracio) - 1]);
+		return haFinalitzat;
 	}
 
 	private void generarProba(String tipus) {
@@ -209,21 +217,7 @@ public class Masmorra extends Joc {
 	}
 
 	private void mostrarUtils() {
-		ArrayList<Tresor> inventari = this.jugador.getEquipament();
-		int numeracio = 1;
-		for (Tresor tresor : inventari) {
-			if (tresor.getUsTresor()) {
-				System.out.println(numeracio + " | " + tresor.getNom());
-				numeracio++;
-			}
-		}
-		// Si existeix algun objecte amb utilitat més enllá del seu valor.
-		if (numeracio != 1) {
-			demanarResposta(numeracio);
-			this.jugador.utilitzarTresor(numeracio);
-		} else {
-			System.out.println("No disposes de tresors amb utilitats activables.");
-		}
+		this.jugador.mostrarUtils();
 	}
 
 	private void explorarSala() {

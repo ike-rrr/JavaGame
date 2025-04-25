@@ -92,39 +92,43 @@ public class Personatge extends Joc {
 	 * Funció que mou Personatge en la posició en x i y en +-1.
 	 * @param direccio
 	 */
-	public void mourePersonatge(String direccio) {
+	public boolean mourePersonatge(String direccio) {
 		switch (direccio) {
 		case "Nort": {
 			if (estaFora((this.posicio.y - 1), this.masmorra.getMatriuSales().length)) {
 				System.out.println("Has sortit de la Masmorra!!");
+				return true;
 			} else {
 				this.posicio.move(posicio.y - 1, posicio.x);
+				return false;
 			}
-			break;
 
 		} case "Sud": {
 			if (estaFora((this.posicio.y + 1), this.masmorra.getMatriuSales().length)) {
 				System.out.println("Has sortit de la Masmorra!!");
+				return true;
 			} else {
 				this.posicio.move(posicio.y + 1, posicio.x);
+				return false;
 			}
-			break;
 
 		} case "Est": {
 			if (estaFora((this.posicio.x + 1), this.masmorra.getMatriuSales()[0].length)) {
 				System.out.println("Has sortit de la Masmorra!!");
+				return true;
 			} else {
 				this.posicio.move(posicio.y, posicio.x + 1);
+				return false;
 			}
-			break;
 			
 		} case "Oest": {
 			if (estaFora((this.posicio.x - 1), this.masmorra.getMatriuSales()[0].length)) {
 				System.out.println("Has sortit de la Masmorra!!");
+				return true;
 			} else {
 				this.posicio.move(posicio.y, posicio.x - 1);
+				return false;
 			}
-			break;
 		}
 		default:
 			throw new IllegalArgumentException("Incorrecte: " + direccio);
@@ -179,13 +183,35 @@ public class Personatge extends Joc {
 			 
 		} case 2: {
 			System.out.println("Has escollit lluitar.");
-			monstre.setVida(monstre.getVida() - this.atac);
+			monstre.setVida(monstre.getVida() - generarValorAleatori(1, this.atac));
 			System.out.println(monstre);
+			if (monstre.getVida() > 0) {
+				System.out.println("El monstre contraataca!");
+				this.vida -= 1;
+			}
 			break;
 		}
 		
 		default:
 			throw new IllegalArgumentException("Incorrecte: " + decisio);
+		}
+	}
+	
+	public void mostrarUtils() {
+		ArrayList<Tresor> inventari = this.equipament;
+		int numeracio = 1;
+		for (Tresor tresor : inventari) {
+			if (tresor.getUsTresor()) {
+				System.out.println(numeracio + " | " + tresor.getNom());
+				numeracio++;
+			}
+		}
+		// Si existeix algun objecte amb utilitat més enllá del seu valor.
+		if (numeracio != 1) {
+			demanarResposta(numeracio);
+			this.utilitzarTresor(numeracio);
+		} else {
+			System.out.println("No disposes de tresors amb utilitats activables.");
 		}
 	}
 
